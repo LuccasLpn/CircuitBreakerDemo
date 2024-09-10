@@ -20,7 +20,7 @@ Este projeto demonstra o uso de `CircuitBreaker`, `RateLimiter`, e `Retry` com o
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/seu-usuario/circuitbreaker-demo.git
+git clone https://github.com/LuccasLpn/CircuitBreakerDemo.git
 cd circuitbreaker-demo
 
 Certifique-se de ter o JDK instalado e configurado corretamente.

@@ -1,0 +1,52 @@
+logging:
+  level:
+    io.github.resilience4j.circuitbreaker: DEBUG
+    io.github.resilience4j.ratelimiter: DEBUG
+    io.github.resilience4j.retry: DEBUG
+spring:
+  application:
+    name: CircuitBreakerDemo
+  jackson:
+    serialization:
+      indent_output: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10
+  ratelimiter:
+    instances:
+      countriesRateLimiter:
+        limit-for-period: 5          # Limite de 5 requisições por período
+        limit-refresh-period: 1s     # Período de 1 segundo para redefinir o limite
+        timeout-duration: 0          # Não esperar pela próxima requisição se o limite for atingido
+  retry:
+    instances:
+      countriesRetry:
+        max-attempts: 3              # Tentar até 3 vezes
+        wait-duration: 2s            # Intervalo de 2 segundos entre as tentativas
+  bulkhead:
+    instances:
+      countriesBulkhead:
+        max-concurrent-calls: 10      # Máximo de 10 chamadas concorrentes
+        max-wait-duration: 0ms        # Sem tempo de espera se as chamadas forem excedidas
